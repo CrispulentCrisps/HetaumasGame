@@ -28,7 +28,7 @@ RTS
     
     LDX #$0000
     LDA #$F0
-    JSR (DirectPage.Scratch+2,x)
+    JSR.W (DirectPage.Scratch+2,x)
 
     LDA #$8D
     STA.w OAM_ClearRoutine,y
@@ -73,7 +73,7 @@ MoveOAMClearToRAM:
     STA.w HardwareRegisters.DMAEnablerReg420B
 
     LDA #$60
-    STA OAM_ClearRoutine+(128*3)
+    STA.W OAM_ClearRoutine+(128*3)
 RTS
 
 SelectOAMRoutine:

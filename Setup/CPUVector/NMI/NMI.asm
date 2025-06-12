@@ -3,12 +3,12 @@ NMIHandlerNative:
 
     SEI ;Set Interrupt flag so routine can start
 
-    PHP
     PHB
-    REP #$30
+    ;REP #$30
     PHA
     PHX
     PHY
+    PHP
     SEP #$30
 
     LDA.b DirectPage.GameLoopRunning
@@ -19,13 +19,12 @@ NMIHandlerNative:
     AND #$0F
     STA.w PPURegisters.ScreenDisplayReg2100_x000bbbb
 
-    REP #$30
+    PLP
     PLY
     PLX
     PLA
     SEP #$30
     PLB
-    PLP
 RTI
     ;FullNMI Runs once every 1 gameloop.
 .FullNMI
@@ -116,7 +115,6 @@ RTI
     LDX #$00
     JSR.w (NMI_ScrollRoutine,x)
 
-
     REP #$30
     LDA.w #DMARegisters       ;\ Set the Direct Page $004300-FF
     TCD                       ;/ (mirror of $7E0000-FF)
@@ -139,13 +137,25 @@ RTI
     AND #$0F
     STA.w PPURegisters.ScreenDisplayReg2100_x000bbbb
 
-    REP #$30
+    ;Controller recieving
+    REP #$10
+    ;Controller state last frame
+    LDX.B DirectPage.Controller1
+    STX.B DirectPage.LastController1Press
+    LDX.B DirectPage.Controller2
+    STX.B DirectPage.LastController2Press
+    ;New controller state
+    LDX.W HardwareRegisters.ControllerPort1Data1Reg4218_byetUDLRaxlr0000
+    STX.B DirectPage.Controller1
+    LDX.W HardwareRegisters.ControllerPort2Data1Reg421A_byetUDLRaxlr0000
+    STX.B DirectPage.Controller2
+
+    PLP
     PLY
     PLX
     PLA
     SEP #$30
     PLB
-    PLP
 RTI
 
 incsrc "VRAMQueue.asm"

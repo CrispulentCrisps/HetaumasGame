@@ -110,6 +110,8 @@ ResetHandlerEmu:
     JSR SelectOAMRoutine
     JSR ClearOAMBuffer
     
+    JSR HandleScrolling
+
     STZ.b DirectPage.GameLoopRunning
     
     WAI
