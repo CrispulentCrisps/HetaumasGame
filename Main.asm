@@ -5,12 +5,13 @@ incsrc "Macros/MacrosInclude.asm"
 incsrc "Setup/Header.asm"
 incsrc "Setup/CPUVector.asm"
 
-org $008000|!FastromBNK
+!CurrentBank = $008000|!FastromBNK
+org !CurrentBank
 StartGame:
 ResetHandlerEmu:
     SEI                       ; Disable IRQ
     LDA #!Fastrom
-    STA.w HardwareRegisters.ROMAccessSpeedReg420D_0000000f  ; Disable IRQ, NMI and joypad reading
+    STA.w HardwareRegisters.ROMAccessSpeedReg420D  ; Disable IRQ, NMI and joypad reading
     STZ.w HardwareRegisters.HDMAEnablerReg420C              ; Disable HDMA
     STZ.w HardwareRegisters.DMAEnablerReg420B               ; Disable DMA
     STZ.w PPURegisters.APUPort0Reg2140                      ;\ Clear APU I/O ports (1-4) (End music)
@@ -19,7 +20,7 @@ ResetHandlerEmu:
     STZ.w PPURegisters.APUPort3Reg2143                      ;/
 
     LDA #$80                                                ;\ Activate force blank (lowest brightness)
-    STA.w PPURegisters.ScreenDisplayReg2100_x000bbbb        ;/
+    STA.w PPURegisters.ScreenDisplayReg2100        ;/
 
     CLC                       ;\ Disable 6502 emulation mode
     XCE                       ;/
@@ -87,9 +88,9 @@ ResetHandlerEmu:
     STA.w OAM_SizeLastFrame
     JSR SelectOAMRoutine
 
-    LDA.w HardwareRegisters.NMIFlagAnd5A22VersionReg4210_n000vvvv
+    LDA.w HardwareRegisters.NMIFlagAnd5A22VersionReg4210
     LDA.b #$81|!IRQFlag
-    STA.w HardwareRegisters.InterruptEnableFlagsReg4200_n0yx000a
+    STA.w HardwareRegisters.InterruptEnableFlagsReg4200
     WAI
 
     LDA #$00
@@ -127,7 +128,10 @@ incsrc "Gamemodes/GamemodeManagement.asm"
 incsrc "Scroll/ScrollingSystem.asm"
 incsrc "EntitySystem/EntitySystem.asm"
 
+!CurrentBank #= !CurrentBank+$010000
+org !CurrentBank
 incsrc "EntitySystem/EntitiesInclude.asm"
 
+incsrc "GraphicRoutines/GraphicRoutinesInclude.asm"
 incsrc "Routines/RoutinesInclude.asm"
 incsrc "Resources/ResourceInclude.asm"
