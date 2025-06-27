@@ -139,15 +139,10 @@ RTI
 
     ;Controller recieving
     REP #$10
-    ;Controller state last frame
-    LDX.B DirectPage.Controller1
-    STX.B DirectPage.LastController1Press
-    LDX.B DirectPage.Controller2
-    STX.B DirectPage.LastController2Press
     ;New controller state
-    LDX.W HardwareRegisters.ControllerPort1Data1Reg4218_byetUDLRaxlr0000
+    LDX.W HardwareRegisters.ControllerPort1Data1Reg4218
     STX.B DirectPage.Controller1
-    LDX.W HardwareRegisters.ControllerPort2Data1Reg421A_byetUDLRaxlr0000
+    LDX.W HardwareRegisters.ControllerPort2Data1Reg421A
     STX.B DirectPage.Controller2
 
     PLP

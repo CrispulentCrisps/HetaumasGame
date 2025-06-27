@@ -41,7 +41,11 @@ struct DirectPage !MainRAMBank
     .FixedColorNMIMirror:                       skip 3
     .HDMAEnablerMirror:                         skip 1
     .Controller1:                               skip 2
-    .LastController1Press:                      skip 2
+    .LastController1:                           skip 2
+    .Controller1Down:                           skip 2
+    .Controller1Up:                             skip 2
     .Controller2:                               skip 2
-    .LastController2Press:                      skip 2
+    .LastController2:                           skip 2
+    .Controller2Down:                           skip 2
+    .Controller2Up:                             skip 2
 endstruct
