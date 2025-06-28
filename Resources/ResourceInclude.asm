@@ -19,12 +19,6 @@ Graphics:
 .13:
     incbin "Graphics/bgtest3.bin"
     ..End
-.14:
-    incbin "Graphics/bgtest4.bin"
-    ..End
-.15:
-    incbin "Graphics/bgtest0.bin"
-    ..End
 !CurrentBank #= !CurrentBank+$010000
 org !CurrentBank
 Palettes:
